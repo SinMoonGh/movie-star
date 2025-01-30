@@ -20,6 +20,11 @@ $(document).ready(function () {
     displayTrashMode(trashMode)
 });
 
+function changeTrashMode() {
+    trashMode = !trashMode
+    showMovie()
+}
+
 function showMovie() {
     // 1. id="movie-box" 로 된 태그의 내부 html 태그를 모두 삭제합니다.
     $('#movie-box').empty()
@@ -44,7 +49,18 @@ function showMovie() {
             },
         })
     } else {
-        alert('여러분이 휴지통 보기 API 를 만들어서 query 를 보내야 합니다.\n그 결과를 addMovieCards() 함수로 넘겨주면 됩니다.')
+        $.ajax({
+            type: "GET",
+            url: "/api/list/trash",
+            data: { 'sortMode': sortMode },
+            success: function (response) {
+                if (response['result'] != 'success') {
+                    alert(sortMode + ' 순으로 영화 목록 받아오기 실패!')
+                    return
+                }
+                addMovieCards(response['movies_list'], true)
+            },
+        })
     }
 }
 
@@ -99,12 +115,14 @@ function addMovieCards(movies, trashMode) {
                 `
         } else {
             cardFooterHtml = `
-                    <a href="#" onclick="restoreMovie()">
+                <div class="card-footer">
+                    <a href="#" onclick="restoreMovie('${id}')">
                     복구하기
                     </a>
-                    <a href="#" onclick="deleteMovie()">
+                    <a href="#" onclick="deleteMovie('${id}')">
                     영구삭제
                     </a>
+                </div>
                 `
         }
 
@@ -118,9 +136,6 @@ function addMovieCards(movies, trashMode) {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// 주의: 아래 like movie 는 임의의 영화에 좋아요가 표시됩니다.
-// 이 구현을 선택한 무비에 좋아요를 넣는 것으로 수정하셔야 됩니다. (함수 매개변수 및 함수 구현 모두)
 function likeMovie(id) {
     $.ajax({
         type: "POST",
@@ -128,9 +143,7 @@ function likeMovie(id) {
         data: { 'id': id },
         success: function (response) {
             if (response['result'] == 'success') {
-                // 2. '좋아요 완료!' 얼럿을 띄웁니다.
                 alert('좋아요 완료!')
-                // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
                 showMovie()
             } else {
                 alert('좋아요 실패ㅠㅠ')
@@ -139,12 +152,36 @@ function likeMovie(id) {
     });
 }
 
-function trashMovie() {
-    alert('휴지통 보내기 기능을 직접 구현해보세요.\n서버 측에 API 를 추가 후 여기서 그 API 를 호출하면 됩니다.')
+function trashMovie(id) {
+    $.ajax({
+        type: "POST",
+        url: "/api/trash",
+        data: { 'id': id },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                alert('휴지통으로 이동 완료!')
+                showMovie()
+            } else {
+                alert('휴지통으로 이동 실패ㅠㅠ')
+            }
+        }
+    });
 }
 
-function restoreMovie() {
-    alert('휴지통에서 되살리기 기능을 직접 구현해보세요.\n서버 측에 API 를 추가 후 여기서 그 API 를 호출하면 됩니다.')
+function restoreMovie(id) {
+    $.ajax({
+        type: "POST",
+        url: "/api/restore",
+        data: { 'id': id },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                alert('복구 완료!')
+                showMovie()
+            } else {
+                alert('복구 실패ㅠㅠ')
+            }
+        }
+    });
 }
 
 function deleteMovie() {

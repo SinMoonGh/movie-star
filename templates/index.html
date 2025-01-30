@@ -65,10 +65,15 @@
     <!-- *주의* 아래 내용 중 id="trash-mode-box" 은 삭제하면 안됩니다. -->
     <div class="mx-auto sorter-box">
         <span class="d-flex justify-content-end">
+            <a href="#" class="btn btn-primary" id="trash-mode-btn" onclick="changeTrashMode()"><i
+                    class="fas fa-trash"></i>
+                휴지통으로 이동
+            </a>
+
             <div id="trash-mode-box">
                 <!-- javascript 가 이 사이에 trash mode 에 따라 HTML element 를 생성해서 삽입합니다. -->
             </div>
-    </div>
+        </span>
     </div>
 
     <!-- 동적으로 영화 목록이 들어갈 부분 -->

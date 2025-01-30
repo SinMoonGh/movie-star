@@ -72,6 +72,10 @@ def show_movies():
     # 2. 성공하면 success 메시지와 함께 movies_list 목록을 클라이언트에 전달합니다.
     return jsonify({'result': 'success', 'movies_list': movies})
 
+@app.route('/api/list/trash', methods=['GET'])
+def show_trash_movies():
+    movies = list(db.movies.find({'trashed': True}, {}))
+    return jsonify({'result': 'success', 'movies_list': movies})
 
 # API #3: 영화에 좋아요 숫자를 하나 올립니다.
 @app.route('/api/like', methods=['POST'])
@@ -94,7 +98,18 @@ def like_movie():
         return jsonify({'result': 'success'})
     else:
         return jsonify({'result': 'failure'})
+    
+@app.route('/api/trash', methods=['POST'])
+def trash_movie():
+    movie_id = request.form['id']
+    db.movies.update_one({'_id': ObjectId(movie_id)}, {'$set': {'trashed': True}})
+    return jsonify({'result': 'success'})
 
+@app.route('/api/restore', methods=['POST'])
+def restore_movie():
+    movie_id = request.form['id']
+    db.movies.update_one({'_id': ObjectId(movie_id)}, {'$set': {'trashed': False}})
+    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
     print(sys.executable)
