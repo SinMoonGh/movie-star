@@ -78,7 +78,8 @@ def show_movies():
 def like_movie():
     # 1. movies 목록에서 find_one으로 영화 하나를 찾습니다.
     #    TODO: 영화 하나만 찾도록 다음 코드를 직접 수정해보세요!!!
-    movie = db.movies.find_one({}) # 여기를 완성 해보세요
+    movie_id = request.form['id']
+    movie = db.movies.find_one({'_id': ObjectId(movie_id)}) # 여기를 완성 해보세요
 
     # 2. movie의 like 에 1을 더해준 new_like 변수를 만듭니다.
     new_likes = movie['likes'] + 1
@@ -86,7 +87,7 @@ def like_movie():
     # 3. movies 목록에서 id 가 매칭되는 영화의 like 를 new_like로 변경합니다.
     #    참고: '$set' 활용하기!
     #    TODO: 영화 하나의 likes값이 변경되도록 다음 코드를 직접 수정해보세요!!!
-    result = db.movies.update_one({}, {'$set': {'likes': new_likes}}) # 여기를 완성해보세요
+    result = db.movies.update_one({'_id': ObjectId(movie_id)}, {'$set': {'likes': new_likes}}) # 여기를 완성해보세요
 
     # 4. 하나의 영화만 영향을 받아야 하므로 result.updated_count 가 1이면  result = success 를 보냄
     if result.modified_count == 1:
