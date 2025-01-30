@@ -1,0 +1,53 @@
+.center {
+    text-align: center;
+}
+
+.sorter-box {
+    width: 500px;
+}
+
+.movie-list {
+    width: 500px;
+    margin: 20px auto 0 auto;
+}
+
+.movie-title {
+    display: inline-block;
+}
+
+.movie-title:hover {
+    text-decoration: underline;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 18px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.card-detail {
+    margin-top: 20px;
+}
+
+.card-footer a {
+    margin-right: 200px;
+}
+
+.card-footer a:last-child {
+    margin-right: 0;
+    color: red;
+}

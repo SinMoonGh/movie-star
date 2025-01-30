@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 다양한 언어를 사용할 수 있도록 UTF-8 을 사용하도록 합니다. -->
+    <meta charset="UTF-8" />
+
+    <!-- 반응형으로 동작하게 합니다. -->
+    <meta title="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap 을 포함합니다. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+
+    <!-- jQuery 를 포함합니다. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- CSS library 인 Bulma 를 포함합니다. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+
+    <!-- 텍스트형태로 되어있는 icon 을 쓸 수 있도록 Font awesome 을 포함하빈다. -->
+    <script defer src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"></script>
+
+    <title>마이 페이보릿 무비 | 프론트-백엔드 연결 마지막 예제!</title>
+
+    <!-- 이 HTML 안에서 사용할 CSS 를 정의합니다. -->
+    <!-- . 으로 시작하는 단어는 CSS clas 에 해당하며 . 을 제외한 이름을 HTML tag 에서 class="..." 형태로 사용합니다. -->
+    <!-- 예: <div class="center"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/movie_star.css') }}">
+
+    <!-- 이 HTML 에서 사용할 JavaScript 를 작성합니다. -->
+    <script src="{{ url_for('static', filename='js/movie_star.js') }}"></script>
+</head>
+
+<!-- HTML 본문에 해당합니다. -->
+<!-- HTML 태그를 이용해서 layout 을 대략적으로 잡아두고, -->
+<!-- 위에 정의된 JavaScript 를 통해 동적으로 데이터를 조작해 최종 HTML 이 만들어집니다. -->
+
+<body>
+    <!-- 제목 부분 -->
+    <section class="hero is-warning">
+        <div class="hero-body">
+            <div class="container center">
+                <h1 class="title">
+                    마이 페이보릿 무비😆
+                </h1>
+                <h2 class="subtitle">
+                    순위를 매겨봅시다
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- 정렬 옵션 부분 -->
+    <!-- *주의* 아래 내용 중 id="sorter-likes", id="sorter-viewers", id="sorter-date" 은 삭제하면 안됩니다. -->
+    <div class="mx-auto sorter-box">
+        <div class="btn-group m-3 mx-auto w-100">
+            <a href="#" class="btn btn-primary" id="sorter-likes" onclick="changeSorter('likes')">좋아요</a>
+            <a href="#" class="btn btn-primary" id="sorter-viewers" onclick="changeSorter('viewers')">누적관객수</a>
+            <a href="#" class="btn btn-primary" id="sorter-date" onclick="changeSorter('date')">개봉일</a>
+        </div>
+    </div>
+
+    <!-- "휴지통 보기" 부분 -->
+    <!-- *주의* 아래 내용 중 id="trash-mode-box" 은 삭제하면 안됩니다. -->
+    <div class="mx-auto sorter-box">
+        <span class="d-flex justify-content-end">
+            <div id="trash-mode-box">
+                <!-- javascript 가 이 사이에 trash mode 에 따라 HTML element 를 생성해서 삽입합니다. -->
+            </div>
+    </div>
+    </div>
+
+    <!-- 동적으로 영화 목록이 들어갈 부분 -->
+    <!-- *주의* 아래 내용 중 id="movie-box" 은 삭제하면 안됩니다. -->
+    <div class="movie-list" id="movie-box">
+        <!-- javascript 가 이 사이에 HTML element 를 생성해서 삽입합니다. -->
+    </div>
+</body>
+
+</html>
