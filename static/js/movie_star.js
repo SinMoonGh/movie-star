@@ -184,8 +184,20 @@ function restoreMovie(id) {
     });
 }
 
-function deleteMovie() {
-    alert('휴지통에서 아주 삭제 기능을 직접 구현해보세요.\n서버 측에 API 를 추가 후 여기서 그 API 를 호출하면 됩니다.')
+function deleteMovie(id) {
+    $.ajax({
+        type: "POST",
+        url: "/api/delete",
+        data: { 'id': id },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                alert('삭제 완료!')
+                showMovie()
+            } else {
+                alert('삭제 실패ㅠㅠ')
+            }
+        }
+    });
 }
 
 // 정렬 기준 버튼을 클릭하면 호출됨

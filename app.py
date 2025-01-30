@@ -111,6 +111,12 @@ def restore_movie():
     db.movies.update_one({'_id': ObjectId(movie_id)}, {'$set': {'trashed': False}})
     return jsonify({'result': 'success'})
 
+@app.route('/api/delete', methods=['POST'])
+def delete_movie():
+    movie_id = request.form['id']
+    db.movies.delete_one({'_id': ObjectId(movie_id)})
+    return jsonify({'result': 'success'})
+
 if __name__ == '__main__':
     print(sys.executable)
     app.run('0.0.0.0', port=5000, debug=True)
