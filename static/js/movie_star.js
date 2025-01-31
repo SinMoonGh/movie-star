@@ -53,10 +53,10 @@ function showMovie() {
         $.ajax({
             type: "GET",
             url: "/api/list/trash",
-            data: { 'sortMode': sortMode },
+            data: {},
             success: function (response) {
                 if (response['result'] != 'success') {
-                    alert(sortMode + ' 순으로 영화 목록 받아오기 실패!')
+                    alert('휴지통 영화 목록 받아오기 실패!')
                     return
                 }
                 addMovieCards(response['movies_list'], true)
@@ -208,15 +208,27 @@ function changeSorter(newMode) {
     }
 
     sortMode = newMode
-    displaySorter()
+    displaySorter(sortMode)
     showMovie()
 }
 
 // 정렬 기준에 따라 해당 버튼만 활성화 시키고 다른 버튼은 비활성화 시킴
-function displaySorter() {
+function displaySorter(sortMode) {
     document.getElementById("sorter-likes").classList.remove("active")
     document.getElementById("sorter-viewers").classList.remove("active")
     document.getElementById("sorter-date").classList.remove("active")
+
+    switch(sortMode) {
+        case Sort.BY_LIKES:
+            document.getElementById("sorter-likes").classList.add("active");
+            break;
+        case Sort.BY_VIEWERS:
+            document.getElementById("sorter-viewers").classList.add("active");
+            break;
+        case Sort.BY_DATE:
+            document.getElementById("sorter-date").classList.add("active");
+            break;
+    }
 }
 
 function displayTrashMode(trashMode) {
