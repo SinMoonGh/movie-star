@@ -22,6 +22,7 @@ $(document).ready(function () {
 
 function changeTrashMode() {
     trashMode = !trashMode
+    displayTrashMode(trashMode)
     showMovie()
 }
 
@@ -219,5 +220,10 @@ function displaySorter() {
 }
 
 function displayTrashMode(trashMode) {
-    // trashMode 에 따라 "휴지통 보기" 또는 "휴지통 나가기" 가 출력 되게 구현해야 됩니다.
+    console.log(trashMode)
+    if (trashMode == true) {
+        document.getElementById("trash-mode-btn").innerHTML = "휴지통 나가기"
+    } else {
+        document.getElementById("trash-mode-btn").innerHTML = "휴지통 보기"
+    }
 }
