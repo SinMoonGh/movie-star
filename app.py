@@ -65,7 +65,11 @@ def show_movies():
     #    TODO: 개봉일 순서 정렬처럼 여러 기준으로 순서대로 정렬해야되는 경우 sort([('A', 1), ('B', 1)]) 처럼 인자를 설정해야 합니다!!!
     #    TODO: 다음 코드에서 likes로 정렬이 정상동작하도록 직접 수정해보세요!!!
     if sortMode == 'likes':
-        movies = list(db.movies.find({'trashed': False}, {})) # 정렬시 여기를 완성해보세요!!!
+        movies = list(db.movies.find({'trashed': False}, {}).sort('likes', -1)) # 좋아요 수 기준 내림차순 정렬
+    elif sortMode == 'viewers':
+        movies = list(db.movies.find({'trashed': False}, {}).sort('viewers', -1)) # 누적관객수 기준 내림차순 정렬
+    elif sortMode == 'date':
+        movies = list(db.movies.find({'trashed': False}, {}).sort([('open_year', -1), ('open_month', -1), ('open_day', -1)])) # 개봉일 기준 내림차순 정렬
     else:
         return jsonify({'result': 'failure'})
 
